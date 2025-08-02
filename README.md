@@ -64,3 +64,8 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+
+forge install OpenZeppelin/openzeppelin-contracts-upgradeable@v4.9.3
+forge install OpenZeppelin/openzeppelin-contracts
+forge install forge-std
