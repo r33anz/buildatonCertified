@@ -261,4 +261,8 @@ contract InstitutionDAO is Initializable, AccessControlUpgradeable {
         
         return creatorRoles;
     }
+
+    function isMember(address _member) external view returns (bool) {
+        return members[_member].active;
+    }
 }
