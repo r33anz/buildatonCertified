@@ -7,7 +7,7 @@ lib/
 !/broadcast
 /broadcast/*/31337/
 /broadcast/**/dry-run/
-foundry.lock
+
 # Docs
 docs/
 
