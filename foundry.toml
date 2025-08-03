@@ -2,6 +2,7 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+fs_permissions = [{ access = "read-write", path = "./" }]
 
 remappings = [
     "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
@@ -17,6 +18,18 @@ optimizer = true
 optimizer_runs = 200
 via_ir = true
 
-# Gas configuration
-gas_limit = 9223372036854775807
-gas_price = 20000000000
+# Gas configuration for Anvil (generous limits)
+gas_limit = 30000000
+gas_price = 1000000000  # 1 gwei
+
+[rpc_endpoints]
+anvil = "http://127.0.0.1:8545"
+sepolia = "${SEPOLIA_RPC_URL}"
+
+[profile.anvil]
+# Specific settings for anvil
+gas_limit = 30000000
+gas_price = 0  
+# Ignorar límites de tamaño en Anvil
+bytecode_hash = "none"
+cbor_metadata = false
