@@ -79,8 +79,10 @@ contract DocumentNFT is Initializable, ERC721Upgradeable, AccessControlUpgradeab
             metadata: ""
         });
 
+        // Guardar el beneficiario
         documentBeneficiary[tokenId] = _beneficiary;
 
+        // Mintear el NFT directamente al beneficiario
         _safeMint(_beneficiary, tokenId);
         _updateMetadata(tokenId);
 
@@ -141,11 +143,13 @@ contract DocumentNFT is Initializable, ERC721Upgradeable, AccessControlUpgradeab
         emit DocumentMetadataUpdated(_tokenId);
     }
 
+    // Nueva función para obtener el beneficiario de un documento
     function getBeneficiary(uint256 _tokenId) external view returns (address) {
         require(_exists(_tokenId), "Document does not exist");
         return documentBeneficiary[_tokenId];
     }
 
+    // Nueva función para obtener documentos por beneficiario
     function getDocumentsByBeneficiary(address _beneficiary) external view returns (uint256[] memory) {
         uint256 count = 0;
         for (uint256 i = 0; i < _tokenIdCounter; i++) {
@@ -283,11 +287,14 @@ contract DocumentNFT is Initializable, ERC721Upgradeable, AccessControlUpgradeab
         return result;
     }
 
+    // Override required functions
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override {
+        // Solo permitir transferencias desde/hacia address(0) (mint/burn)
+        // Los documentos institucionales no deberían ser transferibles
         require(from == address(0) || to == address(0), "Document NFTs are non-transferable");
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
